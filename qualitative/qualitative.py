@@ -12,8 +12,8 @@ use_cuda = torch.cuda.is_available()
 device = torch.device('cuda:0' if use_cuda else 'cpu')
 
 # Add new methods here.
-methods = ['SuperPoint+Boost-F']
-names = ['SuperPoint+Boost-F']
+methods = ['ALike']
+names = ['ALike']
 # methods = ['SuperPoint']
 # names = ['SuperPoint']
 colors = ['red']
@@ -23,8 +23,8 @@ n_i = 847
 n_v = 1
 
 # dataset_path = 'hpatches-sequences-release'
-dataset_path = 'D:/work/data/SECOND_val_set/outputs'
-save_path = 'D:/work/data/SECOND_val_set/match_images5'
+dataset_path = ('D:/study/code/pythonProject/sfd3/data/SECOND/val/outputs')
+save_path = 'D:/study/code/pythonProject/sfd3/data/SECOND/ALIKE'
 
 lim = [1, 15]
 rng = np.arange(lim[0], lim[1] + 1)
@@ -83,10 +83,10 @@ def benchmark_features(read_feats):
     for seq_idx, seq_name in tqdm(enumerate(seq_names[:half_length]), total=half_length):
         keypoints_a, descriptors_a = read_feats(seq_name)  # 对于每个序列，读取第一幅图像的关键点和描述符
 
-        content = seq_name.split("_")[-1].split(".SuperPoint")[0]
+        content = seq_name.split("_")[-1].split(".ALike")[0]
 
-        r1 = 'D:/work/data/SECOND_val_set/im1/' + content
-        r2 = 'D:/work/data/SECOND_val_set/im2/' + content
+        r1 = 'D:/study/code/pythonProject/sfd3/data/SECOND/val/im1/' + content
+        r2 = 'D:/study/code/pythonProject/sfd3/data/SECOND/val/im2/' + content
         n_feats.append(keypoints_a.shape[0])
 
         new_seq_name = seq_name.replace("1_", "2_")
@@ -156,6 +156,7 @@ def summary(stats):
     print('# Matches: Overall {:f}'.format(
         np.sum(n_matches) / ((n_i)))
     )
+    print('MS:{:f}'.format((np.sum(n_matches) / ((n_i))/np.mean(n_feats))))
 
 def getBit(des):
     res = []
